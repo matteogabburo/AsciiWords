@@ -37,7 +37,7 @@ def to_italic(s, to_right=True):
     return italic
 
 
-def set_str(text, nspaces):
+def set_str(text, nspaces=1):
     lines = []
     for c in text:
         if len(c) > 1:
@@ -69,7 +69,7 @@ def add_sequence_trailer(s, seq):
     return [l + [seq] for l in s]
 
 
-def add_under(s, seq):
+def add_on_bottom(s, seq):
     to_add = seq.split('\n')
     to_add = [' ' if a == '' else a for a in to_add]
     new_s = s[:]
@@ -87,7 +87,7 @@ def add_under(s, seq):
     return new_s
 
 
-def add_on(s, seq):
+def add_on_top(s, seq):
     to_add = seq.split('\n')
     to_add = [' ' if a == '' else a for a in to_add]
 
@@ -108,53 +108,3 @@ def add_on(s, seq):
         new_s.append(l)
 
     return new_s
-
-
-def main(args):
-    text = args[1]
-    symbol = '#'
-    background = ' '
-    n_space = 1
-
-    print('Normal\n')
-    s = set_str(text, n_space)
-    print_s(s, symbol, background)
-
-    print('\nItalic (to right)\n')
-    s_it_r = to_italic(s)
-    print_s(s_it_r, symbol)
-
-    print('\nItalic (to left)\n')
-    s_it_l = to_italic(s, to_right=False)
-    print_s(s_it_l, symbol)
-
-    print('\nSeq header\n')
-    s_header = add_sequence_header(s, '# ')
-    print_s(s_header, symbol)
-
-    print('\nSeq trailer\n')
-    s_trailer = add_sequence_trailer(s, '# ')
-    print_s(s_trailer, symbol)
-
-    print('\nAdd under (1 line)\n')
-    s_under1 = add_under(s, '#')
-    print_s(s_under1, symbol)
-
-    print('\nAdd under (3 lines)\n')
-    s_under3 = add_under(s, '\n#\n#')
-    print_s(s_under3, symbol)
-
-    print('\nAdd on (1 lines)\n')
-    s_on1 = add_on(s, '#')
-    print_s(s_on1, symbol)
-
-    print('\nAdd on (3 lines)\n')
-    s_on3 = add_on(s, '#\n#\n')
-    print_s(s_on3, symbol)
-
-
-if __name__ == '__main__':
-    try:
-        sys.exit(main(sys.argv))
-    except (KeyboardInterrupt, SystemExit):
-        print('\nBye...')
